@@ -1,28 +1,47 @@
-  var runSomeTests = function(){
+// Global player object (later this will no longer be global)
+var player = {
+	items: [],
+	pickup: function(item){
+		this.items.push(item);
+	},
+	drop: function(item){
+		var pos = this.items.indexOf(item);
+		if (pos >= 0) {
+			this.items.splice(pos, 1);
+		}
+	}
+}
 
-        var descrip = document.getElementById('descrip');
+// parse and normalize the user input string
+function interpret (input) {
+	console.log('calling interpret'); // replace this with the real code
+}
 
-        console.log(descrip.tagName);
-        console.log(descrip.tagName);
-        console.log(descrip.parentNode.tagName);
+// perform the desired player action
+function execute (command) {
+	console.log('calling execute'); // replace this with the real code
+}
 
-        var headings = document.querySelectorAll('aside > h1');
-        // any h1 element thats a child of an aside element
-        for (i = 0; i < headings.length; i++){
-        console.log(headlights[i].innerhtml);
-        }
-};
+// display any results/changes on the page
+function report () {
+	console.log('calling report'); // replace this with the real code
+}
 
-window.onload = runSomeTests
-document.body.nodeName;
+// run one pass of the game loop
+function gameStep (input) {
+	var cmd = interpret(input); // parse the user input
+	var result = execute(cmd); // run the desired command
+	report(result); // display the results on the screen
+}
 
-document.getElementsByTagName("BUTTON"[0].textContent;
-// get the text content of the first button element
+var gameStart = function() {
+	var inputBox = document.querySelector("input");
+	inputBox.addEventListener("keyup", function(event){
+		if (event.keyCode === 13) {
+			gameStep(this.value);
+		}
+	});
+}
 
-
-element.toString()
-// Converts an element to a string
-
-
-
+window.onload = gameStart; // game starts only after the page is loaded
 
