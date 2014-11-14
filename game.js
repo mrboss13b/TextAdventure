@@ -14,6 +14,9 @@ var player = {
 
 // parse and normalize the user input string
 function interpret (input) {
+	var words = message.split(" "); //split up words
+	var action = words.shift(); // pulls the first
+	var object = words.toString(); // puts whats left into a string
 	console.log('calling interpret'); // replace this with the real code
 }
 
