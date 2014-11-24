@@ -1,3 +1,11 @@
+
+function Location( locationName,frightLevel){
+	this.name = locationName,
+	this.level = frightLevel;
+}
+
+var roomOne = new Location("Upper Tray", "ain't scared");
+
 var roomTwo = new Location("Scanner Housing", "sufficently creepy");
 
 var roomThree = new Location("Toner Pit", "nightmare fuel");
