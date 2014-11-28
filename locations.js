@@ -1,16 +1,26 @@
 
 function Location( locationName,frightLevel){
 	this.name = locationName,
-	this.level = frightLevel;
+	this.level =locationScene;
 }
 
-var roomOne = new Location("Upper Tray", "ain't scared");
+var roomOne = new Location("Upper Tray", "grey plastic spires");
 
-var roomTwo = new Location("Scanner Housing", "sufficently creepy");
+var roomTwo = new Location("Scanner Housing", "plate glass terror");
 
-var roomThree = new Location("Toner Pit", "nightmare fuel");
+var roomThree = new Location("Colate Assembly", "the horror");
 
-var locations = [roomOne, roomTwo, roomThree];
+var roomFour = new Location("Roller Trap", "cylinders of spinning death");
+
+var roomFive = new Location("Paper Storage", "The great white void");
+
+var roomSix = new Location("Cartridge Carrier", "Insert fear");
+
+var roomSeven = new Location("Toner Pit", "watch your footing");
+
+var roomEight = new Location("The Shredder", "It all comes to this");
+
+var locations = [roomOne, roomTwo, roomThree, roomFour, roomFive, roomSix, roomSeven, roomEight];
 
 var connections = [
         [0,1,1], //leads to rooms 2 and 3
