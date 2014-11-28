@@ -1,5 +1,7 @@
 // Global player object (later this will no longer be global)
 var player = {
+	name : document.getElementById(nameEntry),
+	location : playerLoc,
 	items: [],
 	pickup: function(item){
 		this.items.push(item);
