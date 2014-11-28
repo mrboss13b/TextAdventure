@@ -23,9 +23,14 @@ var roomEight = new Location("The Shredder", "It all comes to this");
 var locations = [roomOne, roomTwo, roomThree, roomFour, roomFive, roomSix, roomSeven, roomEight];
 
 var connections = [
-        [0,1,1], //leads to rooms 2 and 3
-        [1,0,1], //leads to rooms 1 and 3
-        [1,1,0] //leads to rooms 1 and 2
+        [0,1,0,1,0,0,0,0],
+        [1,0,0,0,1,0,0,0], 
+        [0,0,0,0,1,0,1,0],
+        [1,0,0,0,1,1,0,0],
+        [0,1,1,1,0,1,1,0],
+        [0,0,0,1,1,0,0,0],
+        [0,0,1,0,1,0,0,1],
+        [0,0,0,0,0,0,1,0]
 ];
 
 var map = {
