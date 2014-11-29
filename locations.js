@@ -37,7 +37,21 @@ var map = {
 	locations : []
 	connections : []
 	
+function Test(locationNumber) {
+    var output = "From here, " + map.locations[locationNumber].name + ", you can travel to these rooms: \n";
+    var i;
+    for (i = 0; i < map.locations.length; i++) {
+        if (map.connections[locationNumber][i] == 1) {
+            output += ("  " + map.locations[i].name + " \n");
+        }
+    }
+    
+    console.log(output);
+}
 
+Test(0);
+Test(1);
+Test(2);
 //Next, create an object called map that has the locations array and the connections matrix as its two properties.
 
 //Finally, write a function that will test out the above code by printing the names of all Locations connected to Location #0.
