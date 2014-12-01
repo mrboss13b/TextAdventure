@@ -1,7 +1,7 @@
 
-function Location( locationName,frightLevel){
+function Location(locationName,locationScene){
 	this.name = locationName,
-	this.level =locationScene;
+	this.scene =locationScene;
 }
 
 var roomOne = new Location("Upper Tray", "grey plastic spires");
