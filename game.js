@@ -1,54 +1,113 @@
 // Global player object (later this will no longer be global)
 var player = {
-	name : document.getElementById(nameEntry),
-	location : playerLoc,
 	items: [],
-	pickup: function(item){
+	PICKUP: function(item){
 		this.items.push(item);
+        return "OK";
 	},
-	drop: function(item){
+	DROP: function(item){
 		var pos = this.items.indexOf(item);
 		if (pos >= 0) {
 			this.items.splice(pos, 1);
-		}
+            return "OK";
+		} else {
+            return "Don't have it.";
+        }
+	},
+	WALK: function(object){
+        console.log('calling walk'); // replace this with the real code
+        return "OK";
+	},
+	JUMP: function(object){
+        console.log('calling jump'); // replace this with the real code
+        return "OK";
+	},
+	DUCK: function(object){
+        console.log('calling duck'); // replace this with the real code
+        return "OK";
+	},
+	OPEN: function(object){
+        console.log('calling open'); // replace this with the real code
+        if (object == undefined) {
+            return "No object defined, Open what?"
+        }
+        return "OK";
+	},
+	CLIMB: function(object){
+        console.log('calling climb'); // replace this with the real code
+        return "OK";
+	},
+	ATTACK: function(object){
+        console.log('calling attack'); // replace this with the real code
+        return "OK";
+	},
+	BLOCK: function(object){
+        console.log('calling block'); // replace this with the real code
+        return "OK";
 	}
 }
 
 // parse and normalize the user input string
 function interpret (input) {
-	var words = message.split(" "); //split up words
-	var action = words.shift(); // pulls the first
-	var object = words.toString(); // puts whats left into a string
+    console.log('interpret');
+    console.log(input);
+	var words = input.split(" "); //split up words
+    var action1 = words.shift(); // pulls the first
+    console.log(action1);
+    var object1 = words.shift(); // pulls the first
+    console.log(object1);
+    var command = {
+        action: action1,
+        object: object1
+    }
 	console.log('calling interpret'); // replace this with the real code
+    return command;
 }
 
 // perform the desired player action
 function execute (command) {
+    console.log('execute');
 	console.log('calling execute'); // replace this with the real code
+    var result = "Command not OK";
+    try {
+        result = player[command.action.toUpperCase()](command.object);
+    }
+    catch(err) {
+        console.log('not a valid action: ' + command.action + '.\n');
+    }
+
+    return result;
 }
 
 // display any results/changes on the page
-function report () {
-	console.log('calling report'); // replace this with the real code
+function report (result) {
+	console.log('report result: ' + result); // replace this with the real code
 }
 
 // run one pass of the game loop
 function gameStep (input) {
+    console.log('gameStep');
 	var cmd = interpret(input); // parse the user input
 	var result = execute(cmd); // run the desired command
 	report(result); // display the results on the screen
 }
 
-var gameStart = function() {
+//var gameStart = function() {
+(function() {
+    console.log('gameStart');
 	var inputBox = document.querySelector("input");
-	inputBox.addEventListener("keyup", function(event){
-		if (event.keyCode === 13) {
-			gameStep(this.value);
-		}
-	});
-}
+	inputBox.addEventListener("keyup", 
+        function(event){
+            console.log('keyup');
+            if (event.keyCode === 13) {
+                console.log('keyup enter');
+                gameStep(this.value);
+            }
+        }
+    );
+})();
 
-window.onload = gameStart; // game starts only after the page is loaded
+//window.onload = gameStart; // game starts only after the page is loaded
 
 /*Instructions
 Clone your TextAdventure repository if it is not already on your local computer.
