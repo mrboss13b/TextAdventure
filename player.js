@@ -8,7 +8,7 @@ var player = {
 	DROP: function(item){
 		var pos = this.items.indexOf(item);
 		if (pos >= 0) {
-			this.items.splice(pos, 1);
+			this.items.splice(pos, 1);
             return "OK";
 		} else {
             return "Don't have it.";
@@ -31,7 +31,7 @@ var player = {
         if (object == undefined) {
             return "No object defined, Open what?"
         }
-        return "OK";
+        return "OK";
 	},
 	CLIMB: function(object){
         console.log('calling climb'); // replace this with the real code
