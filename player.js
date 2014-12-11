@@ -1,11 +1,13 @@
 // Global player object (later this will no longer be global)
 var player = {
+	name : "",
+	location : [],
 	items: [],
 	PICKUP: function(item){
 		this.items.push(item);
         return "OK";
 	},
-	DROP: function(item){
+	drop : function(item){
 		var pos = this.items.indexOf(item);
 		if (pos >= 0) {
 			this.items.splice(pos, 1);
@@ -14,34 +16,34 @@ var player = {
             return "Don't have it.";
         }
 	},
-	WALK: function(object){
+	walk : function(object){
         console.log('calling walk'); // replace this with the real code
         return "OK";
 	},
-	JUMP: function(object){
+	jump : function(object){
         console.log('calling jump'); // replace this with the real code
         return "OK";
 	},
-	DUCK: function(object){
+	duck : function(object){
         console.log('calling duck'); // replace this with the real code
         return "OK";
 	},
-	OPEN: function(object){
+	open : function(object){
         console.log('calling open'); // replace this with the real code
         if (object == undefined) {
             return "No object defined, Open what?"
         }
         return "OK";
 	},
-	CLIMB: function(object){
+	climb : function(object){
         console.log('calling climb'); // replace this with the real code
         return "OK";
 	},
-	ATTACK: function(object){
+	attack : function(object){
         console.log('calling attack'); // replace this with the real code
         return "OK";
 	},
-	BLOCK: function(object){
+	block : function(object){
         console.log('calling block'); // replace this with the real code
         return "OK";
 	}
