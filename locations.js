@@ -1,5 +1,4 @@
 
-
 function Location(locationName,locationScene){
 	this.name = locationName,
 	this.scene =locationScene;
@@ -22,15 +21,15 @@ var roomSeven = new Location("Toner Pit", "watch your footing");
 var roomEight = new Location("The Shredder", "It all comes to this");
 
 var map = { 
-	locations : [roomOne, roomTwo, roomThree, roomFour, roomFive, roomSix, roomSeven, roomEight],
+	locations : [ roomOne, roomTwo, roomThree, roomFour, roomFive, roomSix, roomSeven, roomEight ],
 	connections : [
         [0,1,0,1,0,0,0,0],
-        [1,0,1,1,1,0,0,0], 
-        [0,1,0,0,1,0,1,0],
+        [1,0,0,0,1,0,0,0], 
+        [0,0,0,0,1,0,1,0],
         [1,0,0,0,1,1,0,0],
-        [0,1,0,0,0,1,1,0],
+        [0,1,1,1,0,1,1,0],
         [0,0,0,1,1,0,0,0],
-        [0,0,0,0,0,0,0,1],
+        [0,0,1,0,1,0,0,1],
         [0,0,0,0,0,0,1,0]
 ]
 };
