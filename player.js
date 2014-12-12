@@ -3,7 +3,7 @@ var player = {
 	name : "",
 	location : [],
 	items: [],
-	PICKUP: function(item){
+	pickup : function(item){
 		this.items.push(item);
         return "OK";
 	},
@@ -15,7 +15,7 @@ var player = {
 		} else {
             return "Don't have it.";
         }
-	},
+	}
 	walk : function(object){
         console.log('calling walk'); // replace this with the real code
         return "OK";
