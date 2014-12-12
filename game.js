@@ -16,7 +16,7 @@ and additions you need to make.
     We can set up a series of these functions, and sort of bounce from one
     to the next through clever use of the listeners.
 */
-function gameIntro() {
+(function() {
     var inputBox = document.querySelector("input");
     var listener = function(event) {
         if (event.keyCode === 13) {
@@ -27,12 +27,23 @@ function gameIntro() {
         }
     };
     inputBox.addEventListener ("keyup", listener);
-}
+})();
 
 /*
     Start the main game loop.
 */
 function gameStart() {
+    console.log("gameStart");
+    document.getElementById("game").innerHTML = "<output id=\"scene\">  \
+            <p id=\"descrip\"> \
+                You have been shrunken to the size of a skittle \
+            </p> \
+            <label for=\"action\"> What will you do? </label> \
+        </output> \
+  \
+        <section> \
+            <input id=\"action\" type=\"text\" placeholder=\"Enter an action here...\"/> \
+        </section>";
     var inputBox = document.querySelector("input");
     inputBox.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -143,4 +154,5 @@ function clearContent(node) {
     }
 }
 
-window.onload = gameIntro; // game starts only after the page is loaded
+//window.onload = gameIntro; // game starts only after the page is loaded
+
