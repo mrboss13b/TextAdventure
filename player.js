@@ -1,23 +1,44 @@
 // Global player object (later this will no longer be global)
 var player = {
 	name : "",
-	location : [],
+	location : 0,
 	items: [],
-	pickup : function(item){
-		this.items.push(item);
-        return "OK";
+	pickup: function(item){
+		var pos = map.locations[this.location].items.indexOf(item);
+		if (pos >= 0) {
+			map.locations[this.location].items.splice(pos, 1);
+            this.items.push(item);
+            return "OK";
+		} else {
+            return "What? I don't see that here.";
+        }
 	},
-	drop : function(item){
+	drop: function(item){
 		var pos = this.items.indexOf(item);
 		if (pos >= 0) {
 			this.items.splice(pos, 1);
+            map.locations[this.location].items.push(item);
             return "OK";
 		} else {
             return "Don't have it.";
         }
-	}
-	walk : function(object){
-        console.log('calling walk'); // replace this with the real code
+	},
+	walk : function(locationName){
+        var destination = location.indexOf(location);
+        if (locationName === undefined) {
+            return "Where do you want to walk?";
+        };
+        if (destination !== locationName) {
+            return "\"" + object.toString() + "\" is not a option!";
+        };
+        if (locationName == this.location) {
+            return "You are already at room " + this.location.toString() + "!";
+        };
+        if (isAdjacent(this.location, destination)) {
+            this.location = destination.location;
+        } else {
+            return "You can't get to room " + location.toString() + " from here! Try another room.";  
+        };
         return "OK";
 	},
 	jump : function(object){
