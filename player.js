@@ -24,20 +24,21 @@ var player = {
         }
 	},
 	walk : function(locationName){
-        var destination = location.indexOf(location);
-        if (locationName === undefined) {
+        var destination = map.indexOf(locationName);
+        
+		if (locationName === undefined) {
             return "Where do you want to walk?";
         };
         if (destination !== locationName) {
-            return "\"" + object.toString() + "\" is not a option!";
+            return "\"" + locationName.toString() + "\" is not a option!";
         };
         if (locationName == this.location) {
-            return "You are already at room " + this.location.toString() + "!";
+            return "You are already at room " + this.locationName + "!";
         };
         if (isAdjacent(this.location, destination)) {
             this.location = destination.location;
         } else {
-            return "You can't get to room " + location.toString() + " from here! Try another room.";  
+            return "You can't get to room " + locationName + " from here! Try another room.";  
         };
         return "OK";
 	},
