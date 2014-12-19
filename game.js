@@ -16,7 +16,7 @@ and additions you need to make.
     We can set up a series of these functions, and sort of bounce from one
     to the next through clever use of the listeners.
 */
-(function() {
+function gameIntro() {
     var inputBox = document.querySelector("input");
     var listener = function(event) {
         if (event.keyCode === 13) {
@@ -27,20 +27,20 @@ and additions you need to make.
         }
     };
     inputBox.addEventListener ("keyup", listener);
-})();
+}
 
 /*
     Start the main game loop.
 */
 function gameStart() {
-    console.log("gameStart");
     distributeItems();
-    Test(); // print out the items in each room
-    report("");
-    document.getElementById("game").innerHTML = 
+    document.getElementById("game").innerHTML =
 	"<output id=\"scene\">  \
           <p id=\"descrip\"> \
               You have been shrunken to the size of a skittle \
+          </p> \
+          <p id=\"feedback\"> \
+              Good luck \
           </p> \
           <label id=\"actionLabel\" for=\"action\"> What will you do? </label> \
      </output> \
@@ -50,6 +50,9 @@ function gameStart() {
      </section>";
 
     document.getElementById("actionLabel").innerHTML = "What will you do " + player.name + "?";
+    document.getElementById("feedback").innerHTML = "Good luck " + player.name + "!";
+
+    report("");
 
     var inputBox = document.querySelector("input");
     inputBox.addEventListener("keyup", function(event) {
@@ -108,12 +111,17 @@ function interpret(input) {
 */
 function execute(command) {
     var result = "Command not OK";
+    if (player.won) {
+        result = "You won! Go outdoors and get some fresh air!";
+        return result;
+    }
+
     try {
         result = player[command.action](command.target);
     } catch (err) {
-        console.log("not a valid action: " + command.action + ".\n");
+        result = "not a valid action: " + command.action + ".\n";
     }
-    return result;
+    return result + checkForWinning();
 }
 
 /*
@@ -124,6 +132,7 @@ function report(result) { // note: parameter not currently used
     displayInventory();
     displayScene();
     displayFeedback(result);
+	//displayAdjacent();
 }
 
 
@@ -132,16 +141,50 @@ function report(result) { // note: parameter not currently used
 */
 function displayActions() {
     var field, action, actionList;
+    var winActions = ["relax", "gloat", "exit browser", "play again"];
     actionList = document.querySelector("#help > ul");
     clearContent(actionList);
-    for (field in player) {
-        if (player[field] instanceof Function) {
+
+    if (player.won) {
+        for (i = 0; i < winActions.length; i++) {
             action = document.createElement("li");
-            action.textContent = field;
+            action.textContent = winActions[i];
             actionList.appendChild(action);
         }
+    } else {
+      for (field in player) {
+          if (player[field] instanceof Function) {
+              action = document.createElement("li");
+              action.textContent = field;
+              actionList.appendChild(action);
+          }
+      }
     }
 }
+function displayAdjacent() {
+	var list, location, locationList;
+	list = getAdjacentNames(player.location);
+	locationList = document.querySelector("#locations > ul");
+	clearContent(locationList);
+	for (i = 0; i < list.length; i++) {
+		location = document.createElement("li");
+        location.textContent = list[i];
+        locationList.appendChild(location);
+	}
+}
+
+
+function getAdjacentNames(locNumber) {
+	var list = [];
+	var i;
+	for (i = 0; i < map.locations.length;i++) {
+		if (isAdjacent(locNumber, i)) {
+			list.push(map.locations[i].name);
+		}
+	}
+	return list;
+}
+
 
 /*
     Loop over each inventory item and add it to the Web page.
@@ -161,28 +204,42 @@ function displayInventory() {
     Get the description of the player's current location and write it to the page.
 */
 function displayScene() {
-    // Hmmm... need to implement this function...
-    var scene = "You are in room " + player.location.toString() + ".\n";
+    var scene = "";
     var i;
 
     if (map.locations[player.location].items.length == 0) {
-        scene += "This room, " + map.locations[player.location].name + " - " +  map.locations[player.location].scene + ", is empty. Move along.\n";
+        scene += "You are in room \"" + map.locations[player.location].name + "\" - " +  map.locations[player.location].scene + ". \nIt is empty. Move along.\n";
     } else {
-        scene += "This room, " + map.locations[player.location].name + " - " +  map.locations[player.location].scene + ", contains: \n  ";
+        scene += "You are in room \"" + map.locations[player.location].name + "\" - " +  map.locations[player.location].scene + ". \nIt contains: \n  ";
 
         for (i = 0; i < map.locations[player.location].items.length; i++) {
-            scene += (map.locations[player.location].items[i] + " ");
+            scene += (map.locations[player.location].items[i]);
+            if (i ==  map.locations[player.location].items.length - 1) {
+                scene += ".";
+            } else {
+                scene += ", ";
+            }
         }
     }
+
+
     console.log(scene);
+    document.getElementById("descrip").innerHTML = scene;
 }
 
 /*
     This could be used along with a new paragraph element to display certain messages.
 */
 function displayFeedback(msg) {
-    // Hmmm... need to implement this function...
+    var i;
+	var list = getAdjacentNames(player.location);
     console.log("displayFeedback, " + msg);
+	msg = msg + "You can choose: ";
+	for (i= 0; i < list.length; i++) {
+	    msg += ("\"" + list[i] + "\", ");
+	}
+	document.getElementById("feedback").innerHTML = msg;
+
 }
 
 /*
@@ -195,5 +252,5 @@ function clearContent(node) {
     }
 }
 
-//window.onload = gameIntro; // game starts only after the page is loaded
+window.onload = gameIntro; // game starts only after the page is loaded
 
