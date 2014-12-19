@@ -34,22 +34,26 @@ var map = {
 ]
 };
 
-function Test(locationNumber) {
-    var output = "From here, " + map.locations[locationNumber].name + ", you can travel to these rooms: \n";
-    var i;
-    for (i = 0; i < map.locations.length; i++) {
-        if (map.connections[locationNumber][i] == 1) {
-            output += ("  " + map.locations[i].name + " \n");
-        }
+function isAdjacent(currentLocation, requestedLocation) {
+    console.log("isAdjacent");
+    console.log("currentLocation: " + currentLocation.toString() + " requestedLocation: " + requestedLocation.toString());
+    if (map.connections[currentLocation][requestedLocation] == 1) {
+        return true;
+    } else {
+        return false;
     }
-    
-    console.log(output);
 }
 
-Test(0);
-Test(1);
-Test(2);
-//Next, create an object called map that has the locations array and the connections matrix as its two properties.
 
-//Finally, write a function that will test out the above code by printing the names of all Locations connected to Location #0.
+var allItems = ["cat", "dog", "eraser", "button", "wire", "gum", "gold", "crap", "dead rat", "diamond ring"];
+
+function distributeItems() {
+    var locationNumber = 0;
+    var i;
+
+    for (i = 0; i < allItems.length; i++) {
+        locationNumber = Math.floor(Math.random() * map.locations.length);
+        map.locations[locationNumber].items.push(allItems[i]);
+    }
+}
 
