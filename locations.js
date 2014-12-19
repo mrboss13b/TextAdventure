@@ -34,6 +34,15 @@ var map = {
 ]
 };
 
+function inputRoomIndex(inputString) {
+	for (i = 1; i < map.locations.name.toLowerCase(); i++) {
+	if (map.locations[i].name == inputString) {
+	return i;
+	}
+	}
+	return -1;
+}
+
 function isAdjacent(currentLocation, requestedLocation) {
     console.log("isAdjacent");
     console.log("currentLocation: " + currentLocation.toString() + " requestedLocation: " + requestedLocation.toString());
