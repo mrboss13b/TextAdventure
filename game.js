@@ -34,20 +34,28 @@ and additions you need to make.
 */
 function gameStart() {
     console.log("gameStart");
-    document.getElementById("game").innerHTML = "<output id=\"scene\">  \
-            <p id=\"descrip\"> \
-                You have been shrunken to the size of a skittle \
-            </p> \
-            <label for=\"action\"> What will you do? </label> \
-        </output> \
-  \
-        <section> \
-            <input id=\"action\" type=\"text\" placeholder=\"Enter an action here...\"/> \
-        </section>";
+    distributeItems();
+    Test(); // print out the items in each room
+    report("");
+    document.getElementById("game").innerHTML = 
+	"<output id=\"scene\">  \
+          <p id=\"descrip\"> \
+              You have been shrunken to the size of a skittle \
+          </p> \
+          <label id=\"actionLabel\" for=\"action\"> What will you do? </label> \
+     </output> \
+               \
+     <section> \
+         <input id=\"action\" type=\"text\" placeholder=\"Enter an action here...\"/> \
+     </section>";
+
+    document.getElementById("actionLabel").innerHTML = "What will you do " + player.name + "?";
+
     var inputBox = document.querySelector("input");
     inputBox.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
             gameStep(this.value);
+            this.value = "";
         }
     });
     // we should also perform a few other start-of-game tasks, such as
@@ -72,6 +80,12 @@ function gameStep(input) {
 */
 function customizePlayer(input) {
     // here we should set the player's name and/or other properties
+    player.name = input;
+
+    // give the player some stuff to start with
+    player.items.push("tic tacs");
+    player.items.push("bottle cap");
+    player.items.push("rubber band");
 }
 
 /*
@@ -80,7 +94,12 @@ function customizePlayer(input) {
 function interpret(input) {
     var cmd = {}, tokens = input.trim().toLowerCase().split(" ");
     cmd.action = tokens.shift();
-    cmd.target = tokens.join(" ");
+    if (tokens.length != 0) {
+        cmd.target = tokens.join(" ");
+    } else {
+        cmd.target = undefined;
+    }
+    console.log("interpret, action: " + cmd.action + " target: " + cmd.target);
     return cmd;
 }
 
@@ -88,7 +107,13 @@ function interpret(input) {
     Perform the desired player action.
 */
 function execute(command) {
-    player[command.action](command.target);
+    var result = "Command not OK";
+    try {
+        result = player[command.action](command.target);
+    } catch (err) {
+        console.log("not a valid action: " + command.action + ".\n");
+    }
+    return result;
 }
 
 /*
@@ -98,7 +123,9 @@ function report(result) { // note: parameter not currently used
     displayActions();
     displayInventory();
     displayScene();
+    displayFeedback(result);
 }
+
 
 /*
     Loop over each player method and add it to the Web page.
@@ -135,6 +162,19 @@ function displayInventory() {
 */
 function displayScene() {
     // Hmmm... need to implement this function...
+    var scene = "You are in room " + player.location.toString() + ".\n";
+    var i;
+
+    if (map.locations[player.location].items.length == 0) {
+        scene += "This room, " + map.locations[player.location].name + " - " +  map.locations[player.location].scene + ", is empty. Move along.\n";
+    } else {
+        scene += "This room, " + map.locations[player.location].name + " - " +  map.locations[player.location].scene + ", contains: \n  ";
+
+        for (i = 0; i < map.locations[player.location].items.length; i++) {
+            scene += (map.locations[player.location].items[i] + " ");
+        }
+    }
+    console.log(scene);
 }
 
 /*
@@ -142,6 +182,7 @@ function displayScene() {
 */
 function displayFeedback(msg) {
     // Hmmm... need to implement this function...
+    console.log("displayFeedback, " + msg);
 }
 
 /*
