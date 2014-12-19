@@ -1,44 +1,45 @@
 
 function Location(locationName,locationScene){
 	this.name = locationName,
-	this.scene =locationScene;
+	this.scene =locationScene,
+    this.items = [];
 }
 
-var roomOne = new Location("Upper Tray", "grey plastic spires all around, doors to Scanner Housing and Roller Trap");
+var roomOne = new Location("Upper Tray", "grey plastic spires");
 
-var roomTwo = new Location("Scanner Housing", "plate glass terror, doors to Upper Tray and Paper Storage");
+var roomTwo = new Location("Scanner Housing", "plate glass terror");
 
-var roomThree = new Location("Colate Assembly", "the horror, what does colate even mean? doors to Paper Storage and Toner Pit");
+var roomThree = new Location("Colate Assembly", "the horror");
 
-var roomFour = new Location("Roller Trap", "cylinders of spinning death, and other poems, doors to Upper Tray, Paper Storage, and Cartridge Carrier");
+var roomFour = new Location("Roller Trap", "cylinders of spinning death");
 
-var roomFive = new Location("Paper Storage", "The great white void, doors to Scanner Housing, Colate Assembly, Roller Trap, Cartridge Carrier and Toner Pit");
+var roomFive = new Location("Paper Storage", "The great white void");
 
-var roomSix = new Location("Cartridge Carrier", "Insert fear, or just shake it and pit it back, doors to Roller Trap and Paper Storage");
+var roomSix = new Location("Cartridge Carrier", "Insert fear");
 
-var roomSeven = new Location("Toner Pit", "Muck! No footing at all, doors to Colate Assembly Paper Storage and The Shredder");
+var roomSeven = new Location("Toner Pit", "watch your footing");
 
-var roomEight = new Location("The Shredder", "It all comes to this, door to Toner Pit and Naked Puzzle Basement");
+var roomEight = new Location("The Shredder", "It all comes to this");
 
-var map = { 
+var map = {
 	locations : [ roomOne, roomTwo, roomThree, roomFour, roomFive, roomSix, roomSeven, roomEight ],
 	connections : [
         [0,1,0,1,0,0,0,0],
-        [1,0,0,0,1,0,0,0], 
+        [1,0,0,0,1,0,0,0],
         [0,0,0,0,1,0,1,0],
         [1,0,0,0,1,1,0,0],
         [0,1,1,1,0,1,1,0],
         [0,0,0,1,1,0,0,0],
-        [0,0,1,0,1,0,0,1],
+        [0,0,0,0,1,0,0,1],
         [0,0,0,0,0,0,1,0]
 ]
 };
 
 function inputRoomIndex(inputString) {
-	for (i = 1; i < map.locations.name.toLowerCase(); i++) {
-	if (map.locations[i].name == inputString) {
-	return i;
-	}
+	for (i = 1; i < map.locations.length; i++) {
+	    if (map.locations[i].name.toLowerCase() == inputString) {
+	    return i;
+	    }
 	}
 	return -1;
 }
