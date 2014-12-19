@@ -3,6 +3,7 @@ var player = {
 	name : "",
 	location : 0,
 	items: [],
+    won: false,
 	pickup: function(item){
 		var pos = map.locations[this.location].items.indexOf(item);
 		if (pos >= 0) {
@@ -24,21 +25,24 @@ var player = {
         }
 	},
 	walk : function(locationName){
-        var destination = inputRoomIndex(locationName);
-        
+
 		if (locationName == undefined) {
             return "Where do you want to walk?";
         };
-        
+
+        var destination = inputRoomIndex(locationName);
+        if (destination == -1) {
+           return "\"" + locationName + "\" is not a valid room name.";
+        }
         if (locationName == this.location) {
-            return "You are already at room " + this.locationName + "!";
+            return "You are already at room " + locationName + "!";
         };
         if (isAdjacent(this.location, destination)) {
-            this.location = destination.location;
+            this.location = destination;
+            return "OK";
         } else {
-            return "You can't get to room " + locationName + " from here! Try another room.";  
+            return "You can't get to room " + locationName + " from here! Try another room.";
         };
-        return "OK";
 	},
 	jump : function(object){
         console.log('calling jump'); // replace this with the real code
@@ -67,4 +71,17 @@ var player = {
         console.log('calling block'); // replace this with the real code
         return "OK";
 	}
+}
+function checkForWinning() {
+    var playerItems = player.items.join(" ");
+    var pos = playerItems.indexOf("gold");
+    if (pos >= 0) {
+        if (player.location == 7) {
+            player.won = true;
+            return " You have won the game!!!!!";
+        } else {
+            return " You have found the gold now get out of here! \n(Go to room " + map.locations[7].name + ").";
+        }
+    }
+    return "";
 }
