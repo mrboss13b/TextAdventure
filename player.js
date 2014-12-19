@@ -24,14 +24,12 @@ var player = {
         }
 	},
 	walk : function(locationName){
-        var destination = map.indexOf(locationName);
+        var destination = inputRoomIndex(locationName);
         
-		if (locationName === undefined) {
+		if (locationName == undefined) {
             return "Where do you want to walk?";
         };
-        if (destination !== locationName) {
-            return "\"" + locationName.toString() + "\" is not a option!";
-        };
+        
         if (locationName == this.location) {
             return "You are already at room " + this.locationName + "!";
         };
